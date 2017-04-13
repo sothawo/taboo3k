@@ -1,0 +1,16 @@
+#default application configuration
+
+security:
+  user:
+    name: "taboo3"
+    password: "3oobat"
+  basic:
+    realm: "taboo3"
+
+spring:
+  data:
+    elasticsearch:
+      cluster-name: "taboo3-test"
+      properties:
+        path:
+          data: "tmpdata/elastic"

@@ -1,0 +1,12 @@
+#default application configuration
+
+spring:
+  data:
+    elasticsearch:
+      cluster-name: "taboo3"
+      properties:
+        path:
+          data: "tmpdata/elastic"
+  thymeleaf:
+    mode: "HTML"
+
