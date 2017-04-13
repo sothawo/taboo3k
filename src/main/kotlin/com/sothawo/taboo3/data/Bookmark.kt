@@ -75,10 +75,7 @@ class Bookmark(owner: String, url: String, var title: String = "") {
         if (other?.javaClass != javaClass) return false
 
         other as Bookmark
-
-        if (id != other.id) return false
-
-        return true
+        return id == other.id
     }
 
     /**
@@ -113,5 +110,4 @@ class Bookmark(owner: String, url: String, var title: String = "") {
      * @return all Strings joined
      */
     fun joinedTags() = tags.sorted().joinToString(", ")
-
 }

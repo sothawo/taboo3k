@@ -75,6 +75,7 @@ class BookmarkTest {
         val bookmark = Bookmark(owner = "owner", url = "url")
         val id = bookmark.id
         bookmark.owner = "newowner"
+
         assertThat(bookmark.id).isNotEqualTo(id)
     }
 
@@ -83,6 +84,7 @@ class BookmarkTest {
         val bookmark = Bookmark(owner = "owner", url = "url")
         val id = bookmark.id
         bookmark.url = "newurl"
+
         assertThat(bookmark.id).isNotEqualTo(id)
     }
 
