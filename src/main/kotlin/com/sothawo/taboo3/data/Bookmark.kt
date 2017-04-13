@@ -33,8 +33,9 @@ class Bookmark(owner: String, url: String, var title: String = "") {
             buildId()
         }
 
-    /** the tags of the bookmark. */
-    val tags = mutableSetOf<String>()
+    /** the tags of the bookmark. internally mutable, unmutable to the world. */
+    private val _tags = mutableSetOf<String>()
+    val tags get() = _tags.toSet()
 
     /**
      * initialize the object by calling the setters
@@ -51,7 +52,7 @@ class Bookmark(owner: String, url: String, var title: String = "") {
      *         new tag
      */
     infix fun addTag(tag: String): Bookmark {
-        tags.add(tag.toLowerCase())
+        _tags.add(tag.toLowerCase())
         return this
     }
 
@@ -64,9 +65,7 @@ class Bookmark(owner: String, url: String, var title: String = "") {
         id = String.format("%032x", BigInteger(1, md5!!.digest()))
     }
 
-    override fun toString(): String {
-        return "Bookmark(owner='$owner', url='$url', title='$title', id='$id', tags=$tags)"
-    }
+    override fun toString() = "Bookmark(owner='$owner', url='$url', title='$title', id='$id', tags=$tags)"
 
     /**
      * equality is based on the id.
@@ -82,16 +81,16 @@ class Bookmark(owner: String, url: String, var title: String = "") {
         return true
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    /**
+     * hashcode based on id.
+     */
+    override fun hashCode() = id.hashCode()
+
 
     /**
      * clear the tag set.
      */
-    fun clearTags() {
-        tags.clear()
-    }
+    fun clearTags() = _tags.clear()
 
     /**
      * companion object containing the message digest for creating the bookmark id.
@@ -107,4 +106,12 @@ class Bookmark(owner: String, url: String, var title: String = "") {
             }
         }
     }
+
+    /**
+     * join all strings together in ascendig order, separated by comma and space.
+     *
+     * @return all Strings joined
+     */
+    fun joinedTags() = tags.sorted().joinToString(", ")
+
 }
