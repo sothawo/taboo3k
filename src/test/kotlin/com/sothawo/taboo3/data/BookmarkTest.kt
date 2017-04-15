@@ -47,6 +47,13 @@ class BookmarkTest {
     }
 
     @Test
+    fun emptyTagsAreSkipped() {
+        val tags = Bookmark(owner = "owner", url = "url").addTag("ABC").addTag("").addTag("   ").tags
+
+        assertThat<String>(tags).containsExactly("abc")
+    }
+
+    @Test
     fun ownerIsLowercase() {
         val bookmark = Bookmark(owner = "OWNER", url = "url")
 
@@ -68,24 +75,6 @@ class BookmarkTest {
 
         bookmark.clearTags()
         assertThat<String>(bookmark.tags).isEmpty()
-    }
-
-    @Test
-    fun newOwnerChangesId() {
-        val bookmark = Bookmark(owner = "owner", url = "url")
-        val id = bookmark.id
-        bookmark.owner = "newowner"
-
-        assertThat(bookmark.id).isNotEqualTo(id)
-    }
-
-    @Test
-    fun newUrlChangesId() {
-        val bookmark = Bookmark(owner = "owner", url = "url")
-        val id = bookmark.id
-        bookmark.url = "newurl"
-
-        assertThat(bookmark.id).isNotEqualTo(id)
     }
 
     @Test

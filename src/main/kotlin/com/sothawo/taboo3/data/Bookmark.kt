@@ -1,5 +1,8 @@
 package com.sothawo.taboo3.data
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.PersistenceConstructor
+import org.springframework.data.elasticsearch.annotations.Document
 import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -15,34 +18,21 @@ import java.security.NoSuchAlgorithmException
  *
  * @author P.J. Meisch (pj.meisch@sothawo.com).
  */
-class Bookmark(owner: String, url: String, var title: String = "") {
+@Document(indexName = "bookmarks")
+class Bookmark @PersistenceConstructor constructor(owner: String, val url: String, var title: String = "",
+                                                   val tags: MutableSet<String> = mutableSetOf<String>()) {
+
     /** the id of the bookmark. */
+    @Id
     var id: String = ""
 
-    /** the owner of the bookmark. */
-    var owner: String = ""
-        set(value) {
-            field = value.toLowerCase()
-            buildId()
-        }
-
-    /** the url of the bookmark. */
-    var url = ""
-        set(value) {
-            field = value
-            buildId()
-        }
-
-    /** the tags of the bookmark. internally mutable, unmutable to the world. */
-    private val _tags = mutableSetOf<String>()
-    val tags get() = _tags.toSet()
+    val owner = owner.toLowerCase()
 
     /**
-     * initialize the object by calling the setters
+     * initialize the id
      */
     init {
-        this.owner = owner
-        this.url = url
+        buildId()
     }
 
     /**
@@ -52,7 +42,10 @@ class Bookmark(owner: String, url: String, var title: String = "") {
      *         new tag
      */
     infix fun addTag(tag: String): Bookmark {
-        _tags.add(tag.toLowerCase())
+        val trimmed = tag.trim()
+        if (!trimmed.isEmpty()) {
+            tags.add(trimmed.toLowerCase())
+        }
         return this
     }
 
@@ -87,7 +80,7 @@ class Bookmark(owner: String, url: String, var title: String = "") {
     /**
      * clear the tag set.
      */
-    fun clearTags() = _tags.clear()
+    fun clearTags() = tags.clear()
 
     /**
      * companion object containing the message digest for creating the bookmark id.
