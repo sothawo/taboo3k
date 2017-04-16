@@ -53,7 +53,7 @@ class BookmarkServiceTest {
                 title = "this is the first entry",
                 tags = mutableSetOf("cool", "important"))
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
 
         assertThat(bookmarkService!!.findByOwner("peter")).containsOnly(bookmark1)
         assertThat(bookmarkService!!.findByOwner("other")).containsOnly(bookmark2)
@@ -71,7 +71,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner", url = "url1", title = "title1").addTag("tag1")
         val bookmark2 = Bookmark(owner = "owner", url = "url2", title = "title2").addTag("tag2")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
         bookmarkService!!.deleteBookmark(bookmark2)
 
         val bookmarks = bookmarkService!!.findAll()
@@ -83,7 +83,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner", url = "url1", title = "title1").addTag("tag1")
         val bookmark2 = Bookmark(owner = "owner", url = "url2", title = "title2").addTag("tag2")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
         bookmarkService!!.deleteBookmark(bookmark2.id)
 
         val bookmarks = bookmarkService!!.findAll()
@@ -95,7 +95,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner1", url = "url1", title = "title1").addTag("tag1")
         val bookmark2 = Bookmark(owner = "owner2", url = "url2", title = "title2").addTag("tag2")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
         bookmarkService!!.deleteByOwner("owner1")
 
         val bookmarks = bookmarkService!!.findAll()
@@ -118,7 +118,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner1", url = "url1", title = "title1").addTag("tag1")
         val bookmark2 = Bookmark(owner = "owner2", url = "url2", title = "title2").addTag("tag2")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
         val bookmarks = bookmarkService!!.findAll()
 
         assertThat(bookmarks).containsExactlyInAnyOrder(bookmark1, bookmark2)
@@ -129,7 +129,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner1", url = "url1", title = "title1").addTag("tag1")
         val bookmark2 = Bookmark(owner = "owner2", url = "url2", title = "title2").addTag("tag2")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2))
         val bookmarks = bookmarkService!!.findByOwner("owner1")
 
         assertThat(bookmarks).containsExactlyInAnyOrder(bookmark1)
@@ -143,7 +143,7 @@ class BookmarkServiceTest {
 
         val bookmark3 = Bookmark(owner = "owner", url = "url3", title = "title3").addTag("tag3")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
         val tags = bookmarkService!!.findAllTags()
 
         assertThat(tags).containsExactlyInAnyOrder("tag1", "tag2", "tag3", "common")
@@ -155,7 +155,7 @@ class BookmarkServiceTest {
         val bookmark2 = Bookmark(owner = "owner1", url = "url2", title = "title2").addTag("tag2").addTag("common")
         val bookmark3 = Bookmark(owner = "owner2", url = "url3", title = "title3").addTag("tag3")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
         val tags = bookmarkService!!.findAllTagsByOwner("owner1")
 
         assertThat(tags).containsExactlyInAnyOrder("tag1", "tag2", "common")
@@ -190,7 +190,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner1", url = "url1", title = "Hello world")
         val bookmark2 = Bookmark(owner = "owner2", url = "url2", title = "world wide web")
         val bookmark3 = Bookmark(owner = "owner3", url = "url3", title = "say hello")
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
 
         val bookmarks = bookmarkService!!.findByTitle("hello")
 
@@ -202,7 +202,7 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner1", url = "url1", title = "Hello world")
         val bookmark2 = Bookmark(owner = "owner2", url = "url2", title = "world wide web")
         val bookmark3 = Bookmark(owner = "owner3", url = "url3", title = "say hello")
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
 
         val bookmarks = bookmarkService!!.findByOwnerAndTitle("owner1", "hello")
 
@@ -214,9 +214,9 @@ class BookmarkServiceTest {
         val bookmark1 = Bookmark(owner = "owner", url = "url1", title = "title1").addTag("tag1").addTag("common")
         val bookmark2 = Bookmark(owner = "owner", url = "url2", title = "title2").addTag("tag2").addTag("common")
         val bookmark3 = Bookmark(owner = "owner", url = "url3", title = "title3").addTag("tag3")
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
 
-        val bookmarks = bookmarkService!!.findByTags(arrayListOf("tag2", "common"))
+        val bookmarks = bookmarkService!!.findByTags(listOf("tag2", "common"))
 
         assertThat(bookmarks).containsExactlyInAnyOrder(bookmark2)
     }
@@ -229,12 +229,12 @@ class BookmarkServiceTest {
         val bookmark4 = Bookmark(owner = "owner2", url = "url1", title = "title1").addTag("tag1").addTag("common")
         val bookmark5 = Bookmark(owner = "owner2", url = "url2", title = "title2").addTag("tag2").addTag("common")
         val bookmark6 = Bookmark(owner = "owner2", url = "url3", title = "title3").addTag("tag3")
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3, bookmark4, bookmark5, bookmark6))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3, bookmark4, bookmark5, bookmark6))
 
-        var bookmarks = bookmarkService!!.findByOwnerAndTags("owner1", arrayListOf("tag2", "common"))
+        var bookmarks = bookmarkService!!.findByOwnerAndTags("owner1", listOf("tag2", "common"))
         assertThat(bookmarks).containsExactlyInAnyOrder(bookmark2)
 
-        bookmarks = bookmarkService!!.findByOwnerAndTags("owner2", arrayListOf("tag2", "common"))
+        bookmarks = bookmarkService!!.findByOwnerAndTags("owner2", listOf("tag2", "common"))
         assertThat(bookmarks).containsExactlyInAnyOrder(bookmark5)
     }
 
@@ -245,7 +245,7 @@ class BookmarkServiceTest {
 
         val bookmark3 = Bookmark(owner = "owner", url = "url3", title = "say hello").addTag("tag3")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3))
 
         val bookmarks = bookmarkService!!.findByTitleAndTags("hello", listOf("tag1"))
 
@@ -264,7 +264,7 @@ class BookmarkServiceTest {
 
         val bookmark6 = Bookmark(owner = "owner2", url = "url3", title = "say hello").addTag("tag3")
 
-        bookmarkService!!.save(arrayListOf(bookmark1, bookmark2, bookmark3, bookmark4, bookmark5, bookmark6))
+        bookmarkService!!.save(listOf(bookmark1, bookmark2, bookmark3, bookmark4, bookmark5, bookmark6))
 
         val bookmarks = bookmarkService!!.findByOwnerAndTitleAndTags("owner", "hello", listOf("tag1"))
 

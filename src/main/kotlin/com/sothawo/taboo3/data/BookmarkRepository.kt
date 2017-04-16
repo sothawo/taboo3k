@@ -1,9 +1,9 @@
 /*
  * (c) Copyright 2017 sothawo
  */
-package com.sothawo.taboo3.data;
+package com.sothawo.taboo3.data
 
-import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository
 
 
 /**
