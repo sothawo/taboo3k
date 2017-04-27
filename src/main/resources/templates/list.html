@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>bookmarks</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <!-- div containing the different selection filters -->
+        <div class="col-xs-12 col-sm-3 col-sm-push-9" id="filter-container">
+            <div class="col-xs-12">
+                <!-- Button to clear the selection -->
+                <div class="row">
+                    <form name="clearSelection" action="#" th:action="@{/clearSelection}" method="post">
+                        <button class="btn btn-default" type="submit" id="clearButton">
+                            clear selection
+                        </button>
+                    </form>
+                </div>
+                <!-- search text -->
+                <div class="row">
+                    <div id="searchForm">
+                        <form name="searchtext" action="#" th:action="@{/searchText}"
+                              th:object="${searchData}"
+                              method="post">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                <input type="text" id="searchText" class="form-control" th:value="${searchText}"
+                                       th:field="*{text}">
+                            </div>
+                            <input type="submit"
+                                   style="position: absolute; left: -9999px; width: 1px; height: 1px;">
+                        </form>
+                    </div>
+                </div>
+                <!-- selected tags -->
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">selected tags</div>
+                        <div class="panel-body">
+                            <div th:if="${selectedTags}">
+                                <a class="nohover" th:each="tag : ${selectedTags}"
+                                   href="#" th:href="@{/(deselectTag=${tag})}">
+                                    <button class="btn btn-default btn-sm taglist-entry" type="button" th:text="${tag}">
+                                        Tag
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- available tags -->
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">available tags</div>
+                        <div class="panel-body">
+                            <div th:if="${availableTags}">
+                                <a class="nohover" th:each="tag : ${availableTags}"
+                                   href="#" th:href="@{/(selectTag=${tag})}">
+                                    <button class="btn btn-default btn-sm taglist-entry" type="button" th:text="${tag}">
+                                        Tag
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- div containing the table with the bookmarks -->
+        <div class="col-xs-12 col-sm-9 col-sm-pull-3" id="table-container">
+            <div th:text="${bookmarksMessage}" id="bookmarksMessage">message text</div>
+            <table th:unless="${bookmarks.empty}"
+                   class="table table-striped table-bordered bookmark-table">
+                <tr th:each="bookmark: ${bookmarks}">
+                    <td>
+                        <!-- bookmark entry -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <!-- bookmark data -->
+                                <div class="col-xs-10">
+                                    <div class="bookmark-title" th:text="${bookmark.title}">title</div>
+                                    <div class="bookmark-url">
+                                        <a href="#" th:href="${bookmark.url}" target="_blank"
+                                           th:text="${bookmark.url}">url</a>
+                                    </div>
+                                    <div class="bookmark-tags" th:text="${bookmark.joinedTags()}">tags
+                                    </div>
+                                </div>
+                                <!-- buttons to edit and delete-->
+                                <div class="col-xs-2 bookmark-buttons">
+                                    <a class="nohover" href="#" th:href="@{'/bookmark/edit/' + ${bookmark.id}}">
+                                        <button class="btn btn-default btn-sm glyphicon glyphicon-edit"
+                                                type="button">
+                                        </button>
+                                    </a>
+                                    <a class="nohover" href="#" th:href="@{'/bookmark/delete/' + ${bookmark.id}}">
+                                        <button class="btn btn-default btn-sm glyphicon glyphicon-trash"
+                                                type="button">
+                                        </button>
+                                        <a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
