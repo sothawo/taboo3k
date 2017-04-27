@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title th:text="${config.caption}">Title</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7.min.css}"
+          href="../static/css/bootstrap-3.3.7.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme-3.3.7.min.css}"
+          href="../static/css/bootstrap-theme-3.3.7.min.css">
+
+    <script th:src="@{/js/bootstrap-3.3.7.min.js}"
+            src="../static/js/bootstrap-3.3.7.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/taboo.css}"
+          href="../static/css/taboo.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="panel panel-default" id="edit-add-form">
+        <div class="panel-heading" th:text="${config.buttonLabel}">caption</div>
+        <div class="panel-body">
+            <form name="edit-add-form" action="#" th:action="@{'/bookmark/edit/?mode=' + ${config.mode}}"
+                  method="post"
+                  th:object="${bookmark}">
+                <div class="container-fluid">
+
+                    <input type="hidden" th:field="*{originalId}">
+                    <input type="hidden" th:field="*{owner}">
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">url</span>
+                            <input class="form-control" th:field="*{url}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">title</span>
+                            <input class="form-control" th:field="*{title}"/>
+                            <span class="input-group-btn"> <button
+                                    class="btn btn-default glyphicon glyphicon-download-alt"
+                                    type="button"
+                                    th:onclick="'$.ajax({ url: \'/bookmark/loadtitle\', type: \'post\', dataType: \'text\', data: {url: $(\'#url\').val()}, success: function(res){$(\'#title\').val(res)} });'"/>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">tags</span>
+                            <input class="form-control" th:field="*{tagsAsString}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="btn-toolbar col-xs-12">
+                            <button type="submit" class="btn btn-default" th:text="${config.buttonLabel}">label</button>
+                            <button type="reset" class="btn btn-default">reset</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

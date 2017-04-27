@@ -26,7 +26,7 @@ class Bookmark @PersistenceConstructor constructor(owner: String, val url: Strin
     @Id
     var id: String = ""
 
-    val owner = owner.toLowerCase()
+    var owner = owner.toLowerCase()
 
     /**
      * initialize the id
